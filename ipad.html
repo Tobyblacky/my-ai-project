@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>iPad - Adesewa Store</title>
+  <link rel='stylesheet' href='css/styles.css'>
+</head>
+<body>
+  <header>
+    <div class='header-inner'>
+      <a href='ecommerce.html' class='logo'>Adesewa Store</a>
+      <nav class='nav-menu'>
+        <a href='new-product-launch.html' target='_blank'>New Product Launch</a>
+        <a href='mac.html' target='_blank'>Mac</a>
+        <a href='iphone.html' target='_blank'>iPhone</a>
+        <a href='ipad.html' target='_blank'>iPad</a>
+        <a href='watch.html' target='_blank'>Watch</a>
+        <a href='airpods.html' target='_blank'>Airpods</a>
+        <a href='accessories.html' target='_blank'>Accessories</a>
+        <a href='services.html' target='_blank'>Services</a>
+        <a href='tecno.html' target='_blank'>Tecno</a>
+      </nav>
+    </div>
+  </header>
+  <main style='padding:20px;max-width:1200px;margin:0 auto;'>
+    <h1>iPad</h1>
+    <p>Browse iPad products from Adesewa Store.</p>
+    <div id='productGrid' class='products'></div>
+    <a href='ecommerce.html' style='display:inline-block;margin-top:16px;padding:10px 16px;background:#007BFF;color:#fff;border-radius:8px;text-decoration:none;'>Back to shop</a>
+  </main>
+  <script>
+    const ipadProducts=[
+      {name:'iPad mini | A17 Pro',tagline:'Ultra-fast. Ultra portable.',price:750000,image:'https://www.apple.com/v/ipad-mini/k/images/overview/hero__fkrgra4y1h6i_large_2x.jpg'},
+      {name:'iPad Pro | M4',tagline:'The ultimate iPad experience.',price:1300000,image:'https://www.apple.com/v/ipad-pro/j/images/overview/hero__fsr5p1j0fp26_large_2x.jpg'},
+      {name:'iPad Air | M3',tagline:'Flight speed.',price:840000,image:'https://www.apple.com/v/ipad-air/f/images/overview/hero__d4b9yna73d1a_large_2x.jpg'},
+      {name:'iPad Air | M2',tagline:'Fresh Air. Light. Speed.',price:650000,image:'https://www.apple.com/v/ipad-air/f/images/overview/gallery_1__d0nqe32p49eu_large_2x.jpg'},
+      {name:'iPad | A16',tagline:'Lovable. Drawable. Magical.',price:500000,image:'https://www.apple.com/v/ipad/g/images/overview/hero__cctzj9t1x3y2_large_2x.jpg'},
+      {name:'iPad | 10th Gen',tagline:'Powerful for everyday use and school.',price:380000,image:'https://www.apple.com/v/ipad/l/images/overview/hero__enlnw4xvmj2y_large_2x.jpg'}
+    ];
+
+    function getCart(){ try { return JSON.parse(localStorage.getItem('adesewa_cart')||'[]'); } catch(e){ return []; }}
+    function saveCart(c){ localStorage.setItem('adesewa_cart', JSON.stringify(c)); }
+    function addToCart(name,price,image){ const cart=getCart(); const existing=cart.find(i=>i.name===name); if(existing){existing.qty=(existing.qty||1)+1;} else {cart.push({name,price,image,qty:1});} saveCart(cart); alert(name+' added to cart'); updateCartCount(); }
+    function updateCartCount(){ const cart=getCart(); const count=cart.reduce((s,i)=>s+(i.qty||1),0); const e=document.getElementById('cartCount'); if(e) e.textContent=count; }
+    function onShopNow(name,price,image){ addToCart(name,price,image); window.location.href='cart.html'; }
+        function renderProducts(){
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = ipadProducts.map(p => `
+        <div class='card'>
+          <img src='${p.image}' alt='${p.name}' onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'"/>
+          <div class='card-body'>
+            <h3>${p.name}</h3>
+            <p>${p.tagline || ''}</p>
+            <div class='price'>₦${p.price.toLocaleString()}</div>
+            <button class='btn-shop' onclick="onShopNow('${p.name.replace("'","\'" )}', ${p.price}, '${p.image}')">Shop now</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderProducts();
+    updateCartCount();
+  </script>
+</body>
+</html>

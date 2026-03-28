@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>iPhone - Adesewa Store</title>
+  <link rel='stylesheet' href='css/styles.css'>
+</head>
+<body>
+  <header>
+    <div class='header-inner'>
+      <a href='ecommerce.html' class='logo'>Adesewa Store</a>
+      <nav class='nav-menu'>
+        <a href='new-product-launch.html' target='_blank'>New Product Launch</a>
+        <a href='mac.html' target='_blank'>Mac</a>
+        <a href='iphone.html' target='_blank'>iPhone</a>
+        <a href='ipad.html' target='_blank'>iPad</a>
+        <a href='watch.html' target='_blank'>Watch</a>
+        <a href='airpods.html' target='_blank'>Airpods</a>
+        <a href='accessories.html' target='_blank'>Accessories</a>
+        <a href='services.html' target='_blank'>Services</a>
+        <a href='tecno.html' target='_blank'>Tecno</a>
+      </nav>
+      <div id="cartIcon"><a href="cart.html">🛒 <span id="cartCount">0</span></a></div>
+    </div>
+  </header>
+  <main style='padding:20px;max-width:1200px;margin:0 auto;'>
+    <h1>iPhone</h1>
+    <p>Browse iPhone products from Adesewa Store.</p>
+    <div id='productGrid' class='products'></div>
+    <a href='ecommerce.html' style='display:inline-block;margin-top:16px;padding:10px 16px;background:#007BFF;color:#fff;border-radius:8px;text-decoration:none;'>Back to shop</a>
+  </main>
+  <script>
+    const iphoneProducts = [
+      {name:'iPhone 17',tagline:'The future in your pocket.',price:1200000,image:'https://tse2.mm.bing.net/th/id/OIP.qoGKxse28XKHyq3C8cMz7gHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'iPhone 16 Pro',tagline:'Pro-level performance and efficiency.',price:1500000,image:'https://tse2.mm.bing.net/th/id/OIP.FGhTFSJAR9DGo06KOQg_JgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'iPhone 14 Pro',tagline:'Advanced camera system and great battery.',price:550000,image:'https://phoneforlease.com/wp-content/uploads/2022/10/iphone-14-pro-max-1.jpg'},
+      {name:'iPhone 12 Pro',tagline:'Classic design with premium feel.',price:450000,image:'https://th.bing.com/th/id/R.eb0d83faae57bd88c05edc769ca5172c?rik=WnMS1ohcbWThuQ&pid=ImgRaw&r=0'},
+      {name:'iPhone 12',tagline:'Essential features for daily life.',price:400000,image:'https://m.media-amazon.com/images/I/71ZhhSe9cML.jpg'},
+      {name:'iPhone 13',tagline:'Sleek design with improved camera.',price:470000,image:'https://tse4.mm.bing.net/th/id/OIP.VnAo2as0E0pPLFQgJf64HAHaKE?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'iPhone 13 Pro',tagline:'Pro cameras and fastest chip yet.',price:550000,image:'https://tse2.mm.bing.net/th/id/OIP.9ZY-52w-V4fgf5SA1BLSUQHaHB?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'iPhone 13 Pro Max',tagline:'Largest display and longest battery.',price:750000,image:'https://tse1.mm.bing.net/th/id/OIP.vuI2SyHc_A8d0WLAuzHmxgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'iPhone 12 Pro Max',tagline:'Maxi screen and pro camera tech.',price:550000,image:'https://5.imimg.com/data5/SELLER/Default/2024/7/438182477/NL/ES/IP/226552771/apple-256gb-iphone-12-pro-max-mobile-1000x1000.jpg'},
+      {name:'iPhone 14',tagline:'Modern style with excellent performance.',price:550000,image:'https://focus.hidubai.com/content/images/2023/03/apple--1-.jpg'},
+      {name:'iPhone 17 Pro Max',tagline:'Top-tier performance for power users.',price:1600000,image:'https://tse1.mm.bing.net/th/id/OIF.oZhfljfd9fa5E2ILygarlg?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'iPhone 16',tagline:'Premium power and vivid display.',price:1300000,image:'https://tse3.mm.bing.net/th/id/OIP.q6Bzh0Xne4EVxgJ9NFav0gHaEK?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'iPhone Air',tagline:'Lightweight design with M-class speed.',price:900000,image:'https://tse1.mm.bing.net/th/id/OIP.JX7TFDJyCxKQAi6y4Xgw2gHaEK?rs=1&pid=ImgDetMain&o=7&rm=3'}
+    ];
+
+    function getCart(){
+      try { return JSON.parse(localStorage.getItem('adesewa_cart') || '[]'); } catch(e){ return []; }
+    }
+    function saveCart(cart){
+      localStorage.setItem('adesewa_cart', JSON.stringify(cart));
+    }
+    function addToCart(name, price, image){
+      const cart = getCart();
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty = (existing.qty || 1) + 1;
+      } else {
+        cart.push({name, price, image, qty:1});
+      }
+      saveCart(cart);
+      alert(name + ' added to cart');
+    }
+    function onShopNow(name,price,image){ addToCart(name,price,image); window.location.href='cart.html'; }
+        function renderProducts(){
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = iphoneProducts.map(p => `
+        <div class='card'>
+          <img src='${p.image}' alt='${p.name}' onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'"/>
+          <div class='card-body'>
+            <h3>${p.name}</h3>
+            <p>${p.tagline || ''}</p>
+            <div class='price'>₦${p.price.toLocaleString()}</div>
+            <button class='btn-shop' onclick="onShopNow('${p.name.replace("'","\'" )}', ${p.price}, '${p.image}')">Shop now</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderProducts();
+  </script>
+</body>
+</html>

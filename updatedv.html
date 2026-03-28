@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tobyblacky Gadgets</title>
+
+
+
+<style>
+
+body{
+
+    font-family: 'Segoe UI', sans-serif;
+
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+
+    margin:0;
+
+    color:#333;
+
+}
+
+
+
+.container{
+
+    max-width:900px;
+
+    margin:30px auto;
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+
+}
+
+
+
+h1{
+
+    text-align:center;
+
+    color:#0f2027;
+
+}
+
+
+
+.form{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    justify-content:center;
+
+}
+
+
+
+input{
+
+    padding:10px;
+
+    border-radius:6px;
+
+    border:1px solid #ccc;
+
+}
+
+
+
+button{
+
+    padding:10px 15px;
+
+    border:none;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    background:#007BFF;
+
+    color:white;
+
+    font-weight:bold;
+
+}
+
+
+
+button:hover{
+
+    background:#0056b3;
+
+}
+
+
+
+.products{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+
+    gap:15px;
+
+    margin-top:20px;
+
+}
+
+
+
+.card{
+
+    background:#fff;
+
+    border-radius:10px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+
+    overflow:hidden;
+
+    transition:0.3s;
+
+}
+
+
+
+.card:hover{
+
+    transform:scale(1.03);
+
+}
+
+
+
+.card img{
+
+    width:100%;
+
+    height:150px;
+
+    object-fit:cover;
+
+}
+
+
+
+.card-body{
+
+    padding:10px;
+
+}
+
+
+
+.card h3{
+
+    margin:5px 0;
+
+}
+
+
+
+.price{
+
+    color:green;
+
+    font-weight:bold;
+
+}
+
+
+
+.delete{
+
+    background:red;
+
+    margin-top:10px;
+
+    width:100%;
+
+}
+
+
+
+.total{
+
+    margin-top:20px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    text-align:center;
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+
+<div class="container">
+
+
+
+<h1>📱 Tobyblacky Gadgets</h1>
+
+
+
+<div class="form">
+
+<input type="text" id="name" placeholder="Phone name">
+
+<input type="number" id="price" placeholder="Price">
+
+<input type="text" id="image" placeholder="Image URL">
+
+<button onclick="addProduct()">Add Phone</button>
+
+</div>
+
+
+
+<div class="products" id="productList"></div>
+
+
+
+<div class="total" id="total">Total: ₦0</div>
+
+
+
+</div>
+
+
+
+<script>
+
+let total = 0;
+
+
+
+function addProduct(){
+
+    const name = document.getElementById("name").value.trim();
+
+    const price = parseFloat(document.getElementById("price").value);
+
+    const image = document.getElementById("image").value.trim();
+
+
+
+    if(!name || isNaN(price)){
+
+        alert("Enter valid phone name and price");
+
+        return;
+
+    }
+
+
+
+    const list = document.getElementById("productList");
+
+
+
+    const card = document.createElement("div");
+
+    card.className = "card";
+
+
+
+    card.innerHTML = `
+
+        <img src="${image || 'https://via.placeholder.com/300x150'}">
+
+        <div class="card-body">
+
+            <h3>${name}</h3>
+
+            <div class="price">₦${price.toLocaleString()}</div>
+
+            <button class="delete">Delete</button>
+
+        </div>
+
+    `;
+
+
+
+    card.querySelector(".delete").onclick = function(){
+
+        card.remove();
+
+        total -= price;
+
+        updateTotal();
+
+    };
+
+
+
+    list.appendChild(card);
+
+
+
+    total += price;
+
+    updateTotal();
+
+
+
+    document.getElementById("name").value = "";
+
+    document.getElementById("price").value = "";
+
+    document.getElementById("image").value = "";
+
+}
+
+
+
+function updateTotal(){
+
+    document.getElementById("total").innerText =
+
+        "Total: ₦" + total.toLocaleString();
+
+}
+
+</script>
+
+
+
+</body>
+
+</html>

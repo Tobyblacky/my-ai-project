@@ -1,0 +1,169 @@
+/* Main layout & typography */
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:#f5f7fa;
+}
+
+header{
+  background:#0f2027;
+  color:white;
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+}
+
+/* Product grid and cards */
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  overflow:hidden;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:scale(1.05);
+}
+
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+
+.card-body{
+  padding:10px;
+}
+
+.price{
+  color:green;
+  font-weight:bold;
+}
+
+/* Buttons */
+button{
+  width:100%;
+  padding:10px;
+  border:none;
+  background:#007BFF;
+  color:white;
+  border-radius:5px;
+  cursor:pointer;
+  margin-top:8px;
+}
+
+button:hover{
+  background:#0056b3;
+}
+
+/* Cart panel */
+.cart{
+  position:fixed;
+  right:0;
+  top:0;
+  width:300px;
+  height:100%;
+  background:white;
+  box-shadow:-5px 0 15px rgba(0,0,0,0.2);
+  padding:15px;
+  overflow:auto;
+}
+
+.cart h2{
+  text-align:center;
+}
+
+.cart-item{
+  border-bottom:1px solid #ddd;
+  padding:8px 0;
+}
+
+.total{
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.checkout{
+  background:green;
+}
+
+/* Custom order form */
+.custom-order{
+  padding:12px 20px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+  background:linear-gradient(180deg,#ffffff, #f2f6fb);
+  border-bottom:1px solid #e6eef8;
+}
+
+.custom-order input[type="text"], .custom-order input[type="number"]{
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #dcdfe6;
+}
+
+.custom-order button{
+  padding:8px 12px;
+  width:auto;
+}
+
+/* Custom input size helpers */
+.custom-name{ min-width:180px; }
+.custom-image{ min-width:200px; }
+.custom-qty{ width:70px; }
+
+/* Product qty input */
+.product-qty{
+  width:70px;
+  padding:6px;
+  border-radius:6px;
+  border:1px solid #ddd;
+}
+
+.qty-wrap{ margin-top:8px; }
+
+/* Cart item layout helpers */
+.cart-item-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.cart-qty{
+  width:60px;
+  padding:4px;
+  border-radius:4px;
+  border:1px solid #ddd;
+}
+
+.cart-remove-btn{
+  margin-left:8px;
+  background:#ff4d4f;
+  padding:6px;
+  border-radius:6px;
+  border:none;
+  color:white;
+  cursor:pointer;
+  display:inline-block;
+  width:auto;
+}
+
+/* Make sure cart remove btn doesn't get full-width from button rule */
+.cart-item .cart-remove-btn{ width:auto; }
+
+/* Small responsive tweak so cart doesn't overlap on narrow screens (optional) */
+@media (max-width:700px){
+  .cart{ position:static; width:100%; height:auto; box-shadow:none; }
+  .products{ padding-bottom:80px; }
+}

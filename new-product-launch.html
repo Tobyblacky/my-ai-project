@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>New Product Launch - Adesewa Store</title>
+  <link rel='stylesheet' href='css/styles.css'>
+</head>
+<body>
+  <header>
+    <div class='header-inner'>
+      <a href='ecommerce.html' class='logo'>Adesewa Store</a>
+      <nav class='nav-menu'>
+        <a href='new-product-launch.html' target='_blank'>New Product Launch</a>
+        <a href='mac.html' target='_blank'>Mac</a>
+        <a href='iphone.html' target='_blank'>iPhone</a>
+        <a href='ipad.html' target='_blank'>iPad</a>
+        <a href='watch.html' target='_blank'>Watch</a>
+        <a href='airpods.html' target='_blank'>Airpods</a>
+        <a href='accessories.html' target='_blank'>Accessories</a>
+        <a href='services.html' target='_blank'>Services</a>
+        <a href='tecno.html' target='_blank'>Tecno</a>
+      </nav>
+    </div>
+  </header>
+  <main style='padding:20px;max-width:1200px;margin:0 auto;'>
+    <h1>New Product Launch</h1>
+    <p>Browse New Product Launch products from Adesewa Store.</p>
+    <div id='productGrid' class='products'></div>
+    <a href='ecommerce.html' style='display:inline-block;margin-top:16px;padding:10px 16px;background:#007BFF;color:#fff;border-radius:8px;text-decoration:none;'>Back to shop</a>
+  </main>
+  <script>
+    const launchProducts=[
+      {name:'iPhone 17',tagline:'Next-generation A18X chip',price:1200000,image:'https://tse2.mm.bing.net/th/id/OIP.qoGKxse28XKHyq3C8cMz7gHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'iPhone 17 Pro',tagline:'Professional camera system',price:1600000,image:'https://tse1.mm.bing.net/th/id/OIF.oZhfljfd9fa5E2ILygarlg?rs=1&pid=ImgDetMain&o=7&rm=3'},
+       {name:'MacBook M4 Pro',tagline:'Lightweight, powerful, all-day battery',price:4440000,image:'https://www.istore.com.ng/cdn/shop/files/MacBook_Pro_16-inch_M4_Pro_or_Max_chip_Silver_PDP_Image_Position_6__WWEN_600x.jpg?v=1731075866'},
+      {name:'MacBook Pro 14',tagline:'Pro performance for professionals',price:1450000,image:'https://cdn.wccftech.com/wp-content/uploads/2025/02/M4-Pro-14-inch-MacBook-Pro-1.jpg'},
+      {name:'Apple Watch Ultra 2',tagline:'Adventure-ready performance',price:1180000,image:'https://tse1.mm.bing.net/th/id/OIP.c2D1nRqtPjTzaxs_RZwo7gHaHa?w=1080&h=1080&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'AirPods Pro 2',tagline:'Magic audio with ANC',price:450000,image:'https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24043027/DSCF9466.jpg?quality=90&strip=all&crop=0%2C0%2C100%2C100&w=2048'}
+    ];
+    function getCart(){ try { return JSON.parse(localStorage.getItem('adesewa_cart')||'[]'); } catch(e){ return []; }}
+    function saveCart(c){ localStorage.setItem('adesewa_cart', JSON.stringify(c)); }
+    function addToCart(name,price,image){ const cart=getCart(); const existing=cart.find(i=>i.name===name); if(existing){existing.qty=(existing.qty||1)+1;} else {cart.push({name,price,image,qty:1});} saveCart(cart); alert(name+' added to cart'); updateCartCount(); }
+    function updateCartCount(){ const cart=getCart(); const count=cart.reduce((s,i)=>s+(i.qty||1),0); const e=document.getElementById('cartCount'); if(e) e.textContent=count; }
+    function onShopNow(name,price,image){ addToCart(name,price,image); window.location.href='cart.html'; }
+
+        function renderProducts(){
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = launchProducts.map(p => `
+        <div class='card'>
+          <img src='${p.image}' alt='${p.name}' onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'"/>
+          <div class='card-body'>
+            <h3>${p.name}</h3>
+            <p>${p.tagline || ''}</p>
+            <div class='price'>₦${p.price.toLocaleString()}</div>
+            <button class='btn-shop' onclick="onShopNow('${p.name.replace("'","\'" )}', ${p.price}, '${p.image}')">Shop now</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderProducts();
+    updateCartCount();
+  </script>
+</body>
+</html>
