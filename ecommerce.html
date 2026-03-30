@@ -154,7 +154,7 @@
             products.forEach((p, index) => {
                 container.innerHTML += `
       <div class="card">
-        <div class="card-icon">📱</div>
+        <img src="${p.image}" alt="${p.name}" onerror="this.src='${placeholderData}'">
         <div class="card-body">
           <h3>${p.name}</h3>
           <p>${p.description || 'Fast and powerful device.'}</p>
