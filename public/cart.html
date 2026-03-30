@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart - Adesewa Store</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .cart-item { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+    .cart-item img { width: 100px; height: 100px; object-fit: cover; margin-right: 20px; }
+    .cart-item-info { flex: 1; }
+    .qty-controls { display: flex; gap: 5px; }
+    .qty-controls input { width: 50px; padding: 5px; }
+    .btn-remove { background: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+    .cart-summary { background: #f5f5f5; padding: 20px; border-radius: 4px; margin-top: 20px; }
+    .btn-checkout { width: 100%; background: #28a745; color: white; padding: 12px; border: none; cursor: pointer; border-radius: 4px; font-size: 16px; }
+    .btn-checkout:hover { background: #218838; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header">
+      <a href='index.html' class='logo'>Adesewa Store</a>
+      <nav>
+        <a href='index.html'>Home</a>
+        <a href='iphone.html'>iPhone</a>
+        <a href='mac.html'>Mac</a>
+      </nav>
+      <div id="authSection">
+        <a href="auth.html" id="loginLink">Login</a>
+        <a href="cart.html" id="cartLink">🛒 <span id="cartCount">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main style="padding:20px;max-width:1200px;margin:0 auto;">
+    <h1>Your Cart</h1>
+    <div id="loginRequired" style="display: none;">
+      <p>Please <a href="auth.html">login</a> to view your cart.</p>
+    </div>
+    
+    <div id="cartContent">
+      <div id="cartItems"></div>
+      <div id="cartSummary" class="cart-summary">
+        <h3>Order Summary</h3>
+        <div>Subtotal: <span id="subtotal">₦0</span></div>
+        <div>Shipping: <span id="shipping">₦0</span></div>
+        <h3>Total: <span id="total">₦0</span></h3>
+        <button class="btn-checkout" onclick="checkout()">Proceed to Checkout</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="../api-client.js"></script>
+  <script>
+    async function loadCart() {
+      if (!api.token) {
+        document.getElementById('loginRequired').style.display = 'block';
+        document.getElementById('cartContent').style.display = 'none';
+        return;
+      }
+
+      try {
+        const cart = await api.getCart();
+        const itemsDiv = document.getElementById('cartItems');
+
+        if (cart.items.length === 0) {
+          itemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+          document.getElementById('cartSummary').style.display = 'none';
+          return;
+        }
+
+        let total = 0;
+        itemsDiv.innerHTML = cart.items.map(item => {
+          const itemTotal = item.price * item.quantity;
+          total += itemTotal;
+          return `
+            <div class="cart-item">
+              <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/100x100?text=No+Image'" />
+              <div class="cart-item-info">
+                <h3>${item.name}</h3>
+                <p>Price: ₦${item.price.toLocaleString()}</p>
+              </div>
+              <div>
+                <div class="qty-controls">
+                  <input type="number" value="${item.quantity}" min="1" onchange="updateQty('${item.name}', this.value)" />
+                </div>
+                <p>₦${itemTotal.toLocaleString()}</p>
+                <button class="btn-remove" onclick="removeItem('${item.name}')">Remove</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        document.getElementById('subtotal').textContent = '₦' + total.toLocaleString();
+        document.getElementById('shipping').textContent = '₦5,000';
+        document.getElementById('total').textContent = '₦' + (total + 5000).toLocaleString();
+      } catch (error) {
+        console.error('Error loading cart:', error);
+        itemsDiv.innerHTML = '<p>Error loading cart: ' + error.message + '</p>';
+      }
+    }
+
+    async function removeItem(name) {
+      try {
+        await api.removeFromCart(name);
+        loadCart();
+      } catch (error) {
+        alert('Error removing item: ' + error.message);
+      }
+    }
+
+    async function updateQty(name, quantity) {
+      try {
+        if (quantity <= 0) {
+          removeItem(name);
+        } else {
+          await api.updateCartItem(name, parseInt(quantity));
+          loadCart();
+        }
+      } catch (error) {
+        alert('Error updating quantity: ' + error.message);
+      }
+    }
+
+    async function checkout() {
+      try {
+        const result = await api.checkout();
+        // Redirect to Stripe checkout
+        window.location.href = `https://checkout.stripe.com/pay/${result.sessionId}`;
+      } catch (error) {
+        alert('Error during checkout: ' + error.message);
+      }
+    }
+
+    // Initialize
+    loadCart();
+  </script>
+</body>
+</html>

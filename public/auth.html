@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Login/Register - Adesewa Store</title>
+  <link rel='stylesheet' href='../styles.css'>
+  <style>
+    .auth-container { max-width: 400px; margin: 100px auto; padding: 20px; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+    .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+    .btn-primary { width: 100%; padding: 10px; background: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    .btn-primary:hover { background: #0056b3; }
+    .toggle-link { margin-top: 10px; text-align: center; }
+    .toggle-link a { color: #007BFF; cursor: pointer; text-decoration: underline; }
+    .error { color: red; margin-bottom: 10px; }
+    .success { color: green; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class='header-inner'>
+      <a href='index.html' class='logo'>Adesewa Store</a>
+    </div>
+  </header>
+
+  <div class='auth-container'>
+    <div id='loginForm'>
+      <h2>Login</h2>
+      <div id='loginError' class='error'></div>
+      <form onsubmit='handleLogin(event)'>
+        <div class='form-group'>
+          <label>Email:</label>
+          <input type='email' id='loginEmail' required>
+        </div>
+        <div class='form-group'>
+          <label>Password:</label>
+          <input type='password' id='loginPassword' required>
+        </div>
+        <button type='submit' class='btn-primary'>Login</button>
+      </form>
+      <div class='toggle-link'>
+        Don't have an account? <a onclick='toggleForm()'>Register</a>
+      </div>
+    </div>
+
+    <div id='registerForm' style='display: none;'>
+      <h2>Register</h2>
+      <div id='registerError' class='error'></div>
+      <form onsubmit='handleRegister(event)'>
+        <div class='form-group'>
+          <label>Username:</label>
+          <input type='text' id='regUsername' required>
+        </div>
+        <div class='form-group'>
+          <label>Email:</label>
+          <input type='email' id='regEmail' required>
+        </div>
+        <div class='form-group'>
+          <label>Password:</label>
+          <input type='password' id='regPassword' required>
+        </div>
+        <button type='submit' class='btn-primary'>Register</button>
+      </form>
+      <div class='toggle-link'>
+        Already have an account? <a onclick='toggleForm()'>Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script src='../api-client.js'></script>
+  <script>
+    function toggleForm() {
+      document.getElementById('loginForm').style.display = 
+        document.getElementById('loginForm').style.display === 'none' ? 'block' : 'none';
+      document.getElementById('registerForm').style.display = 
+        document.getElementById('registerForm').style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const errorDiv = document.getElementById('loginError');
+
+      try {
+        const result = await api.login(email, password);
+        api.setToken(result.token);
+        alert('Login successful!');
+        window.location.href = 'index.html';
+      } catch (error) {
+        errorDiv.textContent = error.message;
+      }
+    }
+
+    async function handleRegister(event) {
+      event.preventDefault();
+      const username = document.getElementById('regUsername').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+      const errorDiv = document.getElementById('registerError');
+
+      try {
+        const result = await api.register(username, email, password);
+        api.setToken(result.token);
+        alert('Registration successful!');
+        window.location.href = 'index.html';
+      } catch (error) {
+        errorDiv.textContent = error.message;
+      }
+    }
+
+    // If already logged in, redirect to home
+    if (api.token) {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

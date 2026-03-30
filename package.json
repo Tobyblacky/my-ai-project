@@ -1,0 +1,25 @@
+{
+  "name": "adesewa-store",
+  "version": "1.0.0",
+  "description": "Adesewa Store - Full-stack Ecommerce Platform",
+  "main": "api/server.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "start": "node api/server.js",
+    "build": "echo 'Build complete'",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0",
+    "stripe": "^15.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^16.0.0"
+  }
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>iPhone - Adesewa Store</title>
+  <link rel='stylesheet' href='../styles.css'>
+</head>
+<body>
+  <header>
+    <div class='header-inner'>
+      <a href='index.html' class='logo'>Adesewa Store</a>
+      <nav class='nav-menu'>
+        <a href='index.html'>Home</a>
+        <a href='iphone.html'>iPhone</a>
+        <a href='mac.html'>Mac</a>
+        <a href='ipad.html'>iPad</a>
+        <a href='watch.html'>Watch</a>
+        <a href='airpods.html'>Airpods</a>
+      </nav>
+      <div id="authSection">
+        <a href="auth.html" id="loginLink">Login</a>
+        <a href="cart.html" id="cartLink">🛒 <span id="cartCount">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main style='padding:20px;max-width:1200px;margin:0 auto;'>
+    <h1>iPhone</h1>
+    <p>Browse iPhone products from Adesewa Store.</p>
+    <div id='productGrid' class='products'></div>
+  </main>
+
+  <script src='../api-client.js'></script>
+  <script>
+    // Load and display products
+    async function loadProducts() {
+      try {
+        const products = await api.getProducts('iPhone');
+        const grid = document.getElementById('productGrid');
+        
+        grid.innerHTML = products.map(p => `
+          <div class='card'>
+            <img src='${p.image}' alt='${p.name}' onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'"/>
+            <div class='card-body'>
+              <h3>${p.name}</h3>
+              <p>${p.tagline || ''}</p>
+              <div class='price'>₦${p.price.toLocaleString()}</div>
+              <button class='btn-shop' onclick="addToCart('${p._id}', '${p.name.replace("'","\\'")}', ${p.price}, '${p.image}')">Shop now</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error loading products:', error);
+        document.getElementById('productGrid').innerHTML = '<p>Error loading products</p>';
+      }
+    }
+
+    async function addToCart(productId, name, price, image) {
+      try {
+        if (!api.token) {
+          alert('Please login first');
+          window.location.href = 'auth.html';
+          return;
+        }
+        
+        await api.addToCart(productId, name, price, image, 1);
+        alert(name + ' added to cart');
+        updateCartCount();
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        alert('Error adding to cart: ' + error.message);
+      }
+    }
+
+    async function updateCartCount() {
+      try {
+        if (!api.token) return;
+        const cart = await api.getCart();
+        const count = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+        document.getElementById('cartCount').textContent = count;
+      } catch (error) {
+        console.error('Error updating cart count:', error);
+      }
+    }
+
+    // Initialize
+    loadProducts();
+    updateCartCount();
+  </script>
+</body>
+</html>
