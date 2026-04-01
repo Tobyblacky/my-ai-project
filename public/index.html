@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adesewa Store</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <a href="ecommerce.html" class="logo">Adesewa Store</a>
+            <nav class="nav-menu">
+                <a href="new-product-launch.html" target="_blank">New Product Launch</a>
+                <a href="mac.html" target="_blank">Mac</a>
+                <a href="iphone.html" target="_blank">iPhone</a>
+                <a href="ipad.html" target="_blank">iPad</a>
+                <a href="watch.html" target="_blank">Watch</a>
+                <a href="airpods.html" target="_blank">Airpods</a>
+                <a href="accessories.html" target="_blank">Accessories</a>
+                <a href="services.html" target="_blank">Services</a>
+                <a href="tecno.html" target="_blank">Tecno</a>
+                <a href="infinix.html" target="_blank">Infinix</a>
+                <a href="itel.html" target="_blank">Itel</a>
+            </nav>
+            <div class="nav-icons">
+                <span title="Search">🔍</span>
+                <span title="Account">👤</span>
+                <a href="cart.html" title="Cart">🛒 <span id="cartCount">0</span></a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-card">
+        <div class="hero-icon">📱</div>
+        <h1>Adesewa Store</h1>
+        <p>Welcome to a new era of Shopping. Shop great deals on your favorite gadgets now.</p>
+        <button onclick="document.getElementById('products').scrollIntoView({ behavior: 'smooth' });">Shop Now</button>
+    </section>
+
+    <div class="custom-order">
+        <input type="text" id="customName" class="custom-name" placeholder="Phone name (e.g. iPhone 17)">
+        <input type="number" id="customPrice" class="custom-price" placeholder="Price (₦)" min="0">
+        <input type="text" id="customImage" class="custom-image" placeholder="Image URL (optional)">
+        <img id="customPreview" src="https://via.placeholder.com/60x60?text=+" alt="preview">
+        <input type="number" id="customQty" class="custom-qty" placeholder="Qty" min="1" value="1">
+        <button onclick="addCustomPhone()">Add Custom Phone</button>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products" id="products"></div>
+
+    <!-- debug output (visible only when JS reports issues) -->
+    <div id="debug"
+        style="position:fixed;left:12px;bottom:12px;background:rgba(255,255,255,0.95);padding:8px;border:1px solid #eee;border-radius:6px;display:none;z-index:2000;max-width:60%;font-size:13px;color:#333">
+    </div>
+
+    <div class="cart" id="cart">
+        <div class="cart-header">
+            <h2>🛒 Cart</h2>
+            <button id="cartToggle" class="cart-toggle" onclick="toggleCart()" aria-label="Toggle cart">−</button>
+        </div>
+        <div id="cartBody">
+            <div id="cartItems"></div>
+            <div class="total" id="total">Total: ₦0</div>
+            <button class="checkout" onclick="checkout()">Checkout (WhatsApp)</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-section">
+                <h3>Company</h3>
+                <a href="trade-in.html" target="_blank">Trade-In</a>
+                <a href="repairs.html" target="_blank">Repairs</a>
+                <a href="icare.html" target="_blank">iCare</a>
+                <a href="careers.html" target="_blank">Careers</a>
+                <a href="device-financing.html" target="_blank">Device Financing</a>
+                <a href="technical-support.html" target="_blank">Technical Support</a>
+                <a href="store-locator.html" target="_blank">Store Locator</a>
+                <a href="contact-us.html" target="_blank">Contact Us</a>
+            </div>
+            <div class="footer-section">
+                <h3>Products</h3>
+                <a href="shop-mac.html" target="_blank">Shop Mac</a>
+                <a href="shop-iphone.html" target="_blank">Shop iPhone</a>
+                <a href="shop-ipad.html" target="_blank">Shop iPad</a>
+                <a href="shop-watch.html" target="_blank">Shop Watch</a>
+                <a href="shop-accessories.html" target="_blank">Shop Accessories</a>
+                <a href="shop-tecno.html" target="_blank">Shop Tecno</a>
+            </div>
+            <div class="footer-section">
+                <h3>Policies</h3>
+                <a href="terms.html" target="_blank">Terms of Service</a>
+                <a href="refund.html" target="_blank">Refund Policy</a>
+                <a href="shipping.html" target="_blank">Shipping Policy</a>
+                <a href="privacy.html" target="_blank">Privacy Policy</a>
+            </div>
+            <div class="footer-section">
+                <h3>Subscribe</h3>
+                <p>Sign up to get the latest on sales, new releases and more …</p>
+                <div class="subscribe-wrap">
+                    <input type="email" placeholder="Email*">
+                    <button>Sign Up</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Adesewa Store.</div>
+    </footer>
+
+    <script>
+        // Products list
+        const products = [
+            { name: "iPhone 17", price: 1200000, image: "https://tse2.mm.bing.net/th/id/OIP.qoGKxse28XKHyq3C8cMz7gHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "iPhone 16 Pro", price: 1500000, image: "https://tse2.mm.bing.net/th/id/OIP.FGhTFSJAR9DGo06KOQg_JgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "Samsung Galaxy S24", price: 950000, image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf" },
+            { name: "Samsung Galaxy S23 Ultra", price: 1100000, image: "https://tse2.mm.bing.net/th/id/OIP.DuVDSuaaqP7BWC2YDuJC3wHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "Google Pixel 8", price: 800000, image: "https://tse2.mm.bing.net/th/id/OIP.XkcWAcq90Le4_IHgO45_rgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "OnePlus 12", price: 900000, image: "https://tse2.mm.bing.net/th/id/OIP.4D36rXtqDhNT_IOtsms4rAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "Xiaomi Mi 13", price: 700000, image: "https://i02.appmifile.com/mi-com-product/fly-birds/redmi-note-13-pro/pc/a69a4089984da42166ce89df3dc83468.jpg" },
+            { name: "Iphone 14 Pro", price: 550000, image: "https://phoneforlease.com/wp-content/uploads/2022/10/iphone-14-pro-max-1.jpg" },
+
+            // Local/affordable brands
+            { name: "Tecno Camon 40", price: 315000, image: "https://fdn2.gsmarena.com/vv/pics/tecno/tecno-camon-40-4g-2.jpg" },
+            { name: "Tecno Camon 40 Pro", price: 409000, image: "https://fdn2.gsmarena.com/vv/pics/tecno/tecno-camon-40-pro-5g-2.jpg" },
+            { name: "Tecno Phantom V Flip 2", price: 1070000, image: "https://d13pvy8xd75yde.cloudfront.net/global/phones/ecd80e2f7136f9124496240fd68e7a4f.webp" },
+            { name: "Tecno Phantom V Fold 2", price: 1800000, image: "https://d2cdo4blch85n8.cloudfront.net/wp-content/uploads/2024/09/TECNO-PHANTOM-V-Fold2-Folding-Phone-1-1024x1024.jpg" },
+            { name: "Tecno Spark 40", price: 197000, image: "https://tse1.mm.bing.net/th/id/OIP.DlJi3zzO8Le7D4fus-ArnAAAAA?w=441&h=441&rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "Tecno Spark 40 Pro", price: 261000, image: "https://tse3.mm.bing.net/th/id/OIP.TlgGEFa2RMNiE0ehmjyBIwHaHa?w=600&h=600&rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "Tecno Spark 40 Pro+", price: 285000, image: "https://tse3.mm.bing.net/th/id/OIP.RXAf6za-ignCjLjbQvFEswHaHQ?rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "iPhone 12 Pro", price: 430000, image: "https://tse1.mm.bing.net/th/id/OIP.92czH3P09QVGEjjO0wYTeQHaHa?w=1080&h=1080&rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "iPhone 12", price: 400000, image: "https://tse1.mm.bing.net/th/id/OIP.gjVDQtVhwAa7VTgZHp6_AQHaIp?rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "iPhone 13", price: 470000, image: "https://tse3.mm.bing.net/th/id/OIP.-PsKc5hPGf4w6125R9QPZAHaHa?w=1000&h=1000&rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "iPhone 13 Pro", price: 550000, image: "https://spigen.in/cdn/shop/files/title_web_ip13pro_max_air_skin_600x.jpg?v=1718349239" },
+            { name: "iPhone 13 Pro Max", price: 750000, image: "https://m.media-amazon.com/images/I/31HZq7iKWPL.jpg" },
+            { name: "iPhone 12 Pro Max", price: 550000, image: "https://tse2.mm.bing.net/th/id/OIP.mM-2je6MJz7s4hX_9KzvrQHaHa?w=1080&h=1080&rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "iPhone 14", price: 550000, image: "https://focus.hidubai.com/content/images/2023/03/apple--1-.jpg" },
+            { name: "iPhone 17 Pro Max", price: 1600000, image: "https://tse1.mm.bing.net/th/id/OIF.oZhfljfd9fa5E2ILygarlg?rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "iPhone 16", price: 1300000, image: "https://tse3.mm.bing.net/th/id/OIP.q6Bzh0Xne4EVxgJ9NFav0gHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" },
+            { name: "iPhone Air", price: 900000, image: "https://tse1.mm.bing.net/th/id/OIP.JX7TFDJyCxKQAi6y4Xgw2gHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" }
+        ];
+
+
+        let cart = [];
+
+        // Simple placeholder for failed images
+        const placeholderData = 'https://via.placeholder.com/400x300?text=No+Image';
+
+        function displayProducts() {
+            const container = document.getElementById("products");
+            container.innerHTML = "";
+            products.forEach((p, index) => {
+                container.innerHTML += `
+      <div class="card">
+        <img src="${p.image}" alt="${p.name}" onerror="this.src='${placeholderData}'">
+        <div class="card-body">
+          <h3>${p.name}</h3>
+          <p>${p.description || 'Fast and powerful device.'}</p>
+          <div class="price">₦${p.price.toLocaleString()}</div>
+          <input type="number" id="qty-${index}" min="1" value="1" class="product-qty" style="width:80px;">
+          <button class="btn-shop" onclick="addToCart(${index}, parseInt(document.getElementById('qty-${index}').value))">Shop Now</button>
+        </div>
+      </div>
+    `;
+            });
+        }
+
+        function addToCart(index, qty = 1) {
+            const product = Object.assign({}, products[index]);
+            product.qty = parseInt(qty) || 1;
+            cart.push(product);
+            saveCart();
+            renderCart();
+            updateCartCount();
+        }
+
+        function addCustomPhone() {
+            const name = document.getElementById('customName').value.trim();
+            const priceVal = document.getElementById('customPrice').value;
+            const price = parseFloat(priceVal);
+            const image = document.getElementById('customImage').value.trim();
+            const qty = parseInt(document.getElementById('customQty').value) || 1;
+
+            if (!name || !price || price <= 0) {
+                alert('Please provide a valid phone name and price.');
+                return;
+            }
+
+            const p = { name, price, image: image || 'https://via.placeholder.com/400x300?text=Phone', qty };
+            cart.push(p);
+            saveCart();
+
+            // clear inputs
+            document.getElementById('customName').value = '';
+            document.getElementById('customPrice').value = '';
+            document.getElementById('customImage').value = '';
+            document.getElementById('customQty').value = 1;
+            const preview = document.getElementById('customPreview');
+            if (preview) preview.src = placeholderData;
+
+            renderCart();
+            updateCartCount();
+        }
+
+        function renderCart() {
+            let cartHTML = "";
+            let total = 0;
+            cart.forEach((item, i) => {
+                const qty = item.qty || 1;
+                total += item.price * qty;
+                cartHTML += `
+			<div class="cart-item" data-index="${i}">
+				<div class="cart-item-row">
+					<div>
+						<strong>${item.name}</strong><br>
+						₦${item.price.toLocaleString()} each
+					</div>
+					<div>
+						Qty: <input type="number" value="${qty}" min="1" onchange="updateQty(${i}, this.value)" class="cart-qty">
+						<button onclick="removeItem(${i})" class="cart-remove-btn">Remove</button>
+					</div>
+				</div>
+			</div>
+		`;
+            });
+
+            document.getElementById("cartItems").innerHTML = cartHTML || '<div>Your cart is empty</div>';
+            document.getElementById("total").innerText = "Total: ₦" + total.toLocaleString();
+        }
+
+        function updateQty(index, value) {
+            const qty = parseInt(value) || 1;
+            cart[index].qty = qty;
+            saveCart();
+            renderCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            saveCart();
+            renderCart();
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty.');
+                return;
+            }
+
+            let message = "Hello, I want to order:\n";
+            let total = 0;
+            cart.forEach(item => {
+                const qty = item.qty || 1;
+                message += `${item.name} x${qty} - ₦${(item.price * qty).toLocaleString()}\n`;
+                total += item.price * qty;
+            });
+            message += `\nTotal: ₦${total.toLocaleString()}`;
+
+            const url = "https://wa.me/2348129602716?text=" + encodeURIComponent(message);
+            window.open(url, "_blank");
+        }
+
+        // Persistence
+        function saveCart() {
+            try { localStorage.setItem('adesewa_cart', JSON.stringify(cart)); } catch (e) {/*ignore*/ }
+        }
+
+        function loadCart() {
+            try {
+                const raw = localStorage.getItem('adesewa_cart');
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed)) cart = parsed.map(it => ({ name: it.name, price: Number(it.price) || 0, image: it.image || 'https://via.placeholder.com/400x300?text=Phone', qty: Number(it.qty) || 1 }));
+                }
+            } catch (e) {/*ignore*/ }
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+            const countEl = document.getElementById('cartCount');
+            if (countEl) countEl.textContent = count;
+        }
+
+        // Image preview for custom image input
+        document.addEventListener('DOMContentLoaded', () => {
+            const customImageInput = document.getElementById('customImage');
+            const customPreview = document.getElementById('customPreview');
+            if (customImageInput && customPreview) {
+                customImageInput.addEventListener('input', () => {
+                    const url = customImageInput.value.trim();
+                    customPreview.src = url || 'https://via.placeholder.com/60x60?text=+';
+                });
+                customPreview.addEventListener('error', () => { customPreview.src = 'https://via.placeholder.com/60x60?text=+'; });
+            }
+
+            // load cart and render
+            loadCart();
+            updateCartCount();
+
+            // show products info in debug box to help diagnose blank grid
+            const dbg = document.getElementById('debug');
+            if (dbg) {
+                dbg.style.display = 'none';
+                dbg.innerText = 'Products (' + products.length + '):\n' + products.map(p => p.name).join(', ');
+            }
+
+            // try/catch display to surface errors in-page
+            try {
+                displayProducts();
+                renderCart();
+            } catch (e) {
+                if (dbg) { dbg.style.display = 'block'; dbg.innerText = 'Error rendering products: ' + e.toString(); }
+                console.error(e);
+            }
+
+            // apply saved collapsed state
+            const saved = localStorage.getItem('cartCollapsed');
+            const cartEl = document.getElementById('cart');
+            const body = document.getElementById('cartBody');
+            const btn = document.getElementById('cartToggle');
+            if (saved === '1') {
+                cartEl.classList.add('collapsed');
+                if (btn) btn.innerText = '+';
+                if (body) body.style.display = 'none';
+            } else {
+                if (btn) btn.innerText = '−';
+            }
+        });
+
+        // Collapsible cart toggle function (kept global so button can call it)
+        function toggleCart() {
+            const cartEl = document.getElementById('cart');
+            const body = document.getElementById('cartBody');
+            const btn = document.getElementById('cartToggle');
+            const collapsed = cartEl.classList.toggle('collapsed');
+            if (btn) btn.innerText = collapsed ? '+' : '−';
+            if (body) body.style.display = collapsed ? 'none' : 'block';
+            try { localStorage.setItem('cartCollapsed', collapsed ? '1' : '0'); } catch (e) {/*ignore*/ }
+        }
+    </script>
+</body>
+
+</html>
