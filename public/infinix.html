@@ -34,12 +34,23 @@
   </main>
   <script>
     const infinixProducts = [
-      {name:'Infinix Note 40',tagline:'Mid-range with excellent display.',price:420000,image:'https://tse1.mm.bing.net/th/id/OIP.wK8VpQ9e6c1lZXvJ7K0R7AAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
-      {name:'Infinix Hot 40',tagline:'Budget powerhouse with long battery life.',price:250000,image:'https://tse2.mm.bing.net/th/id/OIP.mF5k-rMfXhN0q8K0Lnw5nQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
-      {name:'Infinix Smart 8',tagline:'Affordable smartphone for daily use.',price:145000,image:'https://tse3.mm.bing.net/th/id/OIP.rM6X5dXK3YXhZ5K6Gv0qIAAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
-      {name:'Infinix Zero 40',tagline:'Premium feature with competitive pricing.',price:680000,image:'https://tse4.mm.bing.net/th/id/OIP.Sw8nQ3fRq7nP8mL9H9wZMQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
-      {name:'Infinix Hot 40 Pro',tagline:'Upgraded performance and camera.',price:310000,image:'https://tse1.mm.bing.net/th/id/OIP.eR7Z6pN5eZ8rZ3I0rK5e4wHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
-      {name:'Infinix Note 40 Pro',tagline:'Stylus-enabled productivity phone.',price:520000,image:'https://tse2.mm.bing.net/th/id/OIP.qH9k3Pw5pQ7rQ6K5tM8l8wHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'}
+      {name:'Infinix Note Edge 128GB',tagline:'Premium Note series - X6887 128+8GB.',price:426130,image:'https://tse1.mm.bing.net/th/id/OIP.wK8VpQ9e6c1lZXvJ7K0R7AAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Note Edge 256GB',tagline:'Premium Note series - X6887 256+8GB.',price:473323,image:'https://tse1.mm.bing.net/th/id/OIP.wK8VpQ9e6c1lZXvJ7K0R7AAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Note60 Pro',tagline:'Professional Note - X6878 256+8GB.',price:568568,image:'https://tse1.mm.bing.net/th/id/OIP.wK8VpQ9e6c1lZXvJ7K0R7AAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Note 50',tagline:'Mid-range Note series - X6858 256+8GB.',price:324543,image:'https://tse1.mm.bing.net/th/id/OIP.wK8VpQ9e6c1lZXvJ7K0R7AAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Note 50 Pro',tagline:'Professional features - X6855 256+8GB.',price:384313,image:'https://tse1.mm.bing.net/th/id/OIP.wK8VpQ9e6c1lZXvJ7K0R7AAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Note 50 Pro+ 5G',tagline:'Premium 5G - X6856 256+12GB.',price:681873,image:'https://tse1.mm.bing.net/th/id/OIP.wK8VpQ9e6c1lZXvJ7K0R7AAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Smart10 HD',tagline:'Budget HD display - X6525 64+2GB.',price:112553,image:'https://tse3.mm.bing.net/th/id/OIP.rM6X5dXK3YXhZ5K6Gv0qIAAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Smart10',tagline:'Affordable daily phone - X6725 64+3GB.',price:116208,image:'https://tse3.mm.bing.net/th/id/OIP.rM6X5dXK3YXhZ5K6Gv0qIAAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Smart10 Plus',tagline:'Smart series upgrade - X6725B 128+4GB.',price:140073,image:'https://tse3.mm.bing.net/th/id/OIP.rM6X5dXK3YXhZ5K6Gv0qIAAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Hot60i 128GB',tagline:'Budget performance - X6728B 128+4GB.',price:158025,image:'https://tse2.mm.bing.net/th/id/OIP.mF5k-rMfXhN0q8K0Lnw5nQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Hot60i 256GB',tagline:'Hot60i with more storage - X6728 256+8GB.',price:194253,image:'https://tse2.mm.bing.net/th/id/OIP.mF5k-rMfXhN0q8K0Lnw5nQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Hot60 Pro 128GB',tagline:'Professional Hot series - X6885 128+8GB.',price:228330,image:'https://tse2.mm.bing.net/th/id/OIP.mF5k-rMfXhN0q8K0Lnw5nQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Hot60 Pro+ 128GB',tagline:'Top-tier Hot series - X6886 128+8GB.',price:276920,image:'https://tse2.mm.bing.net/th/id/OIP.mF5k-rMfXhN0q8K0Lnw5nQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Hot60 Pro+ 256GB',tagline:'Premium Hot storage - X6886 256+8GB.',price:305623,image:'https://tse2.mm.bing.net/th/id/OIP.mF5k-rMfXhN0q8K0Lnw5nQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix GT30 Pro',tagline:'Gaming powerhouse - X6873 256+12GB.',price:558355,image:'https://tse4.mm.bing.net/th/id/OIP.Sw8nQ3fRq7nP8mL9H9wZMQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix XPAD 128GB',tagline:'Tablet 4G - X1102 128+4GB.',price:217795,image:'https://tse4.mm.bing.net/th/id/OIP.Sw8nQ3fRq7nP8mL9H9wZMQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix XPAD 256GB',tagline:'Tablet 4G - X1102 256+8GB.',price:254130,image:'https://tse4.mm.bing.net/th/id/OIP.Sw8nQ3fRq7nP8mL9H9wZMQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'}
     ];
 
     function getCart(){
