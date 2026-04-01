@@ -34,13 +34,20 @@
   </main>
   <script>
     const tecnoProducts = [
+      {name:'Tecno Pop 10C',tagline:'Entry-level smartphone with solid design.',price:116638,image:'https://tse1.mm.bing.net/th/id/OIP.pop10c?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Pop 10',tagline:'Affordable everyday phone.',price:132978,image:'https://tse2.mm.bing.net/th/id/OIP.pop10?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno POP 10 Pro',tagline:'Pop series with enhanced features.',price:144480,image:'https://tse3.mm.bing.net/th/id/OIP.pop10pro?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Spark 40',tagline:'Budget performance with long battery.',price:198445,image:'https://tse1.mm.bing.net/th/id/OIP.DlJi3zzO8Le7D4fus-ArnAAAAA?w=441&h=441&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Spark 40 Pro',tagline:'Fast charging and crisp display.',price:275630,image:'https://tse3.mm.bing.net/th/id/OIP.TlgGEFa2RMNiE0ehmjyBIwHaHa?w=600&h=600&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Spark 40 Pro+',tagline:'Top-tier specs for gaming and multitasking.',price:322285,image:'https://tse3.mm.bing.net/th/id/OIP.RXAf6za-ignCjLjbQvFEswHaHQ?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Spark Slim',tagline:'Sleek design with solid performance.',price:354428,image:'https://tse4.mm.bing.net/th/id/OIP.spark_slim?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Mega Pad SE',tagline:'Tablet experience at budget price.',price:285520,image:'https://tse5.mm.bing.net/th/id/OIP.megapad_se?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Mega Pad Pro',tagline:'Professional tablet with large display.',price:344323,image:'https://tse6.mm.bing.net/th/id/OIP.megapad_pro?rs=1&pid=ImgDetMain&o=7&rm=3'},
       {name:'Tecno Camon 40',tagline:'Sharp camera series for creators.',price:315000,image:'https://fdn2.gsmarena.com/vv/pics/tecno/tecno-camon-40-4g-2.jpg'},
-      {name:'Tecno Camon 40 Pro',tagline:'Pro-grade video recording at great price.',price:409000,image:'https://fdn2.gsmarena.com/vv/pics/tecno/tecno-camon-40-pro-5g-2.jpg'},
+      {name:'Tecno Camon 50',tagline:'Photography flagship with excellent imaging.',price:397643,image:'https://tse7.mm.bing.net/th/id/OIP.camon50?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Camon 50 Pro',tagline:'Pro-camera setup for content creators.',price:499230,image:'https://tse8.mm.bing.net/th/id/OIP.camon50pro?rs=1&pid=ImgDetMain&o=7&rm=3'},
       {name:'Tecno Phantom V Flip 2',tagline:'Fashion-forward foldable experience.',price:1070000,image:'https://tse1.mm.bing.net/th/id/OIP.DvAGdFhS4sFmqWOC5il9wwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'},
-      {name:'Tecno Phantom V Fold 2',tagline:'Large foldable screen with premium power.',price:1800000,image:'https://tse3.mm.bing.net/th/id/OIP.t0BDTOlf1JCjF_WfQUtdKwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3'},
-      {name:'Tecno Spark 40',tagline:'Budget performance with long battery.',price:197000,image:'https://tse1.mm.bing.net/th/id/OIP.DlJi3zzO8Le7D4fus-ArnAAAAA?w=441&h=441&rs=1&pid=ImgDetMain&o=7&rm=3'},
-      {name:'Tecno Spark 40 Pro',tagline:'Fast charging and crisp display.',price:261000,image:'https://tse3.mm.bing.net/th/id/OIP.TlgGEFa2RMNiE0ehmjyBIwHaHa?w=600&h=600&rs=1&pid=ImgDetMain&o=7&rm=3'},
-      {name:'Tecno Spark 40 Pro+',tagline:'Top-tier specs for gaming and multitasking.',price:285000,image:'https://tse3.mm.bing.net/th/id/OIP.RXAf6za-ignCjLjbQvFEswHaHQ?rs=1&pid=ImgDetMain&o=7&rm=3'}
+      {name:'Tecno Phantom V Fold 2',tagline:'Large foldable screen with premium power.',price:1800000,image:'https://tse3.mm.bing.net/th/id/OIP.t0BDTOlf1JCjF_WfQUtdKwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3'}
     ];
 
     function getCart(){ try { return JSON.parse(localStorage.getItem('adesewa_cart') || '[]'); } catch(e){ return []; } }
