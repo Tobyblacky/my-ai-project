@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Samsung - Adesewa Store</title>
+  <link rel='stylesheet' href='css/styles.css'>
+</head>
+<body>
+  <header>
+    <div class='header-inner'>
+      <a href='index.html' class='logo'>Adesewa Store</a>
+      <nav class='nav-menu'>
+        <a href='new-product-launch.html'>New Product Launch</a>
+        <a href='mac.html'>Mac</a>
+        <a href='iphone.html'>iPhone</a>
+        <a href='ipad.html'>iPad</a>
+        <a href='watch.html'>Watch</a>
+        <a href='airpods.html'>Airpods</a>
+        <a href='accessories.html'>Accessories</a>
+        <a href='services.html'>Services</a>
+        <a href='tecno.html'>Tecno</a>
+        <a href='infinix.html'>Infinix</a>
+        <a href='itel.html'>Itel</a>
+        <a href='samsung.html'>Samsung</a>
+        <a href='redmi.html'>Redmi</a>
+      </nav>
+      <div id="cartIcon"><a href="cart.html">🛒 <span id="cartCount">0</span></a></div>
+    </div>
+  </header>
+  <main style='padding:20px;max-width:1200px;margin:0 auto;'>
+    <h1>Samsung</h1>
+    <p>Browse Samsung products from Adesewa Store.</p>
+    <div id='productGrid' class='products'></div>
+    <a href='index.html' style='display:inline-block;margin-top:16px;padding:10px 16px;background:#007BFF;color:#fff;border-radius:8px;text-decoration:none;'>Back to shop</a>
+  </main>
+  <script>
+    const samsungProducts = [
+      {name:'Samsung Galaxy A15',tagline:'Budget-friendly 5G experience.',price:285000,image:'https://images.samsung.com/is/image/samsung/p6pim/ng/2401/gallery/ng-galaxy-a15-5g-sm-a155f-thumb-sm-a155fbkutng-thumb-533222?$320_320_PNG$'},
+      {name:'Samsung Galaxy A25',tagline:'Mid-range powerhouse with 5G.',price:380000,image:'https://images.samsung.com/is/image/samsung/p6pim/ng/2401/gallery/ng-galaxy-a25-5g-sm-a256b-thumb-sm-a256bbkutng-thumb-533234?$320_320_PNG$'},
+      {name:'Samsung Galaxy A35',tagline:'Advanced camera and display.',price:450000,image:'https://images.samsung.com/is/image/samsung/p6pim/ng/2403/gallery/ng-galaxy-a35-5g-sm-a356b-thumb-sm-a356bbkutng-thumb-535548?$320_320_PNG$'},
+      {name:'Samsung Galaxy S24',tagline:'Flagship performance with AI.',price:1200000,image:'https://images.samsung.com/is/image/samsung/p6pim/ng/2401/gallery/ng-galaxy-s24-sm-s921b-thumb-sm-s921bbkutng-thumb-533262?$320_320_PNG$'},
+      {name:'Samsung Galaxy S24+',tagline:'Larger display flagship experience.',price:1450000,image:'https://images.samsung.com/is/image/samsung/p6pim/ng/2401/gallery/ng-galaxy-s24-plus-sm-s926b-thumb-sm-s926bbkutng-thumb-533263?$320_320_PNG$'},
+      {name:'Samsung Galaxy S24 Ultra',tagline:'Premium flagship with S Pen.',price:1850000,image:'https://images.samsung.com/is/image/samsung/p6pim/ng/2401/gallery/ng-galaxy-s24-ultra-sm-s928b-thumb-sm-s928bbkutng-thumb-533264?$320_320_PNG$'},
+      {name:'Samsung Galaxy Z Flip6',tagline:'Foldable flip phone design.',price:1350000,image:'https://images.samsung.com/is/image/samsung/p6pim/ng/2407/gallery/ng-galaxy-z-flip6-sm-f730b-thumb-sm-f730bbkutng-thumb-537890?$320_320_PNG$'},
+      {name:'Samsung Galaxy Z Fold6',tagline:'Tablet-sized foldable phone.',price:1950000,image:'https://images.samsung.com/is/image/samsung/p6pim/ng/2407/gallery/ng-galaxy-z-fold6-sm-f936b-thumb-sm-f936bbkutng-thumb-537891?$320_320_PNG$'},
+      {name:'Samsung Galaxy Tab S9',tagline:'10.9-inch tablet for productivity.',price:820000,image:'https://images.samsung.com/is/image/samsung/p6pim/ng/2301/gallery/ng-galaxy-tab-s9-sm-x910-thumb-sm-x910nzaamea-thumb-520024?$320_320_PNG$'},
+      {name:'Samsung Galaxy Tab S9+',tagline:'12.4-inch premium tablet.',price:1100000,image:'https://images.samsung.com/is/image/samsung/p6pim/ng/2301/gallery/ng-galaxy-tab-s9-plus-sm-x920-thumb-sm-x920nzaamea-thumb-520025?$320_320_PNG$'}
+    ];
+
+    function getCart(){ try { return JSON.parse(localStorage.getItem('adesewa_cart') || '[]'); } catch(e){ return []; } }
+    function saveCart(cart){ localStorage.setItem('adesewa_cart', JSON.stringify(cart)); }
+    function addToCart(name, price, image){ const cart = getCart(); const existing = cart.find(item => item.name === name); if (existing) { existing.qty = (existing.qty || 1) + 1; } else { cart.push({name, price, image, qty:1}); } saveCart(cart); alert(name + ' added to cart'); updateCartCount(); }
+    function updateCartCount(){ const cart=getCart(); const count=cart.reduce((s,i)=>s+(i.qty||1),0); const e=document.getElementById('cartCount'); if(e) e.textContent=count; }
+    function onShopNow(name,price,image){ addToCart(name,price,image); window.location.href='cart.html'; }
+    function renderProducts(){
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = samsungProducts.map(p => `
+        <div class='card'>
+          <img src='${p.image}' alt='${p.name}' onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'"/>
+          <div class='card-body'>
+            <h3>${p.name}</h3>
+            <p>${p.tagline || ''}</p>
+            <div class='price'>₦${p.price.toLocaleString()}</div>
+            <button class='btn-shop' onclick="onShopNow('${p.name.replace("'","\'" )}', ${p.price}, '${p.image}')">Shop now</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderProducts();
+    updateCartCount();
+  </script>
+</body>
+</html>

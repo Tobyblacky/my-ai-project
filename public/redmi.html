@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Redmi - Adesewa Store</title>
+  <link rel='stylesheet' href='css/styles.css'>
+</head>
+<body>
+  <header>
+    <div class='header-inner'>
+      <a href='index.html' class='logo'>Adesewa Store</a>
+      <nav class='nav-menu'>
+        <a href='new-product-launch.html'>New Product Launch</a>
+        <a href='mac.html'>Mac</a>
+        <a href='iphone.html'>iPhone</a>
+        <a href='ipad.html'>iPad</a>
+        <a href='watch.html'>Watch</a>
+        <a href='airpods.html'>Airpods</a>
+        <a href='accessories.html'>Accessories</a>
+        <a href='services.html'>Services</a>
+        <a href='tecno.html'>Tecno</a>
+        <a href='infinix.html'>Infinix</a>
+        <a href='itel.html'>Itel</a>
+        <a href='samsung.html'>Samsung</a>
+        <a href='redmi.html'>Redmi</a>
+      </nav>
+      <div id="cartIcon"><a href="cart.html">🛒 <span id="cartCount">0</span></a></div>
+    </div>
+  </header>
+  <main style='padding:20px;max-width:1200px;margin:0 auto;'>
+    <h1>Redmi</h1>
+    <p>Browse Redmi products from Adesewa Store.</p>
+    <div id='productGrid' class='products'></div>
+    <a href='index.html' style='display:inline-block;margin-top:16px;padding:10px 16px;background:#007BFF;color:#fff;border-radius:8px;text-decoration:none;'>Back to shop</a>
+  </main>
+  <script>
+    const redmiProducts = [
+      {name:'Redmi 13',tagline:'Budget phone with 5000mAh battery.',price:195000,image:'https://i02.appmifile.com/webupload/8a9a5ea15c39f25c3d75206c14c01fd8.png'},
+      {name:'Redmi 13C',tagline:'Affordable entry-level smartphone.',price:165000,image:'https://i02.appmifile.com/webupload/e8aa3f8da3d47ffcc866e14e4c28b01d.png'},
+      {name:'Redmi 13C Pro',tagline:'Enhanced performance and camera.',price:205000,image:'https://i02.appmifile.com/webupload/b7c4f3e3d1c2a3f6e5c9a1b2d8e9f3a5.png'},
+      {name:'Redmi Note 13',tagline:'Mid-range with excellent display.',price:320000,image:'https://i02.appmifile.com/webupload/22dbca8e8b688e60cdfa2db0f5aedd6e.png'},
+      {name:'Redmi Note 13 Pro',tagline:'Professional features at a great price.',price:420000,image:'https://i02.appmifile.com/webupload/dd2a3eebe06eca40b1f1a68145876ce3.png'},
+      {name:'Redmi Note 13 Pro+',tagline:'Premium Note series with 120W charging.',price:520000,image:'https://i02.appmifile.com/webupload/4c8b9e1d7a2f5e8c3b6a9f2e1d4a7c5b.png'},
+      {name:'Redmi Note 14',tagline:'Latest Note series with 5G.',price:380000,image:'https://i02.appmifile.com/webupload/8f1a2c7e9d3b5f4a6e8c1b3d9f2a7e4c.png'},
+      {name:'Redmi Note 14 Pro',tagline:'Flagship Note experience.',price:480000,image:'https://i02.appmifile.com/webupload/c5d7e9f1a3b5c8e2d4f7a9b1c3e6f8a0.png'},
+      {name:'Redmi K70',tagline:'Gaming flagship with Snapdragon 8.',price:1100000,image:'https://i02.appmifile.com/webupload/7b4e9a1f2c5d8e3a6f9c2e5b8a1d4f7c.png'},
+      {name:'Redmi K70 Pro',tagline:'Ultimate gaming performance.',price:1350000,image:'https://i02.appmifile.com/webupload/9e2f4a7c1d5b8f3e6a9c2f5e8b1a4d7c.png'},
+      {name:'Redmi Pad SE',tagline:'Budget tablet with great display.',price:450000,image:'https://i02.appmifile.com/webupload/5c1d8a3f2e9b7c4a6f1e8d2a5b9c3e7f.png'},
+      {name:'Redmi Pad Pro',tagline:'Premium tablet experience.',price:850000,image:'https://i02.appmifile.com/webupload/3a7c2e9f1b4d8e5a6c3f2e8b9a1d4f7c.png'}
+    ];
+
+    function getCart(){ try { return JSON.parse(localStorage.getItem('adesewa_cart') || '[]'); } catch(e){ return []; } }
+    function saveCart(cart){ localStorage.setItem('adesewa_cart', JSON.stringify(cart)); }
+    function addToCart(name, price, image){ const cart = getCart(); const existing = cart.find(item => item.name === name); if (existing) { existing.qty = (existing.qty || 1) + 1; } else { cart.push({name, price, image, qty:1}); } saveCart(cart); alert(name + ' added to cart'); updateCartCount(); }
+    function updateCartCount(){ const cart=getCart(); const count=cart.reduce((s,i)=>s+(i.qty||1),0); const e=document.getElementById('cartCount'); if(e) e.textContent=count; }
+    function onShopNow(name,price,image){ addToCart(name,price,image); window.location.href='cart.html'; }
+    function renderProducts(){
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = redmiProducts.map(p => `
+        <div class='card'>
+          <img src='${p.image}' alt='${p.name}' onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'"/>
+          <div class='card-body'>
+            <h3>${p.name}</h3>
+            <p>${p.tagline || ''}</p>
+            <div class='price'>₦${p.price.toLocaleString()}</div>
+            <button class='btn-shop' onclick="onShopNow('${p.name.replace("'","\'" )}', ${p.price}, '${p.image}')">Shop now</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderProducts();
+    updateCartCount();
+  </script>
+</body>
+</html>
