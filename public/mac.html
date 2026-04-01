@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Mac - Adesewa Store</title>
+  <link rel='stylesheet' href='css/styles.css'>
+</head>
+<body>
+  <header>
+    <div class='header-inner'>
+      <a href='index.html' class='logo'>Adesewa Store</a>
+      <nav class='nav-menu'>
+        <a href='new-product-launch.html'>New Product Launch</a>
+        <a href='mac.html'>Mac</a>
+        <a href='iphone.html'>iPhone</a>
+        <a href='ipad.html'>iPad</a>
+        <a href='watch.html'>Watch</a>
+        <a href='airpods.html'>Airpods</a>
+        <a href='accessories.html'>Accessories</a>
+        <a href='services.html'>Services</a>
+        <a href='tecno.html'>Tecno</a>
+        <a href='infinix.html'>Infinix</a>
+        <a href='itel.html'>Itel</a>
+      </nav>
+    </div>
+  </header>
+  <main style='padding:20px;max-width:1200px;margin:0 auto;'>
+    <h1>Mac</h1>
+    <p>Browse Mac products from Adesewa Store.</p>
+    <div id='productGrid' class='products'></div>
+    <a href='index.html' style='display:inline-block;margin-top:16px;padding:10px 16px;background:#007BFF;color:#fff;border-radius:8px;text-decoration:none;'>Back to shop</a>
+  </main>
+  <script>
+    const macProducts = [
+      {name:'MacBook M4 Pro',tagline:'Lightweight, powerful, all-day battery',price:4440000,image:'https://www.istore.com.ng/cdn/shop/files/MacBook_Pro_16-inch_M4_Pro_or_Max_chip_Silver_PDP_Image_Position_6__WWEN_600x.jpg?v=1731075866'},
+      {name:'MacBook Pro 14',tagline:'Pro performance for professionals',price:1450000,image:'https://cdn.wccftech.com/wp-content/uploads/2025/02/M4-Pro-14-inch-MacBook-Pro-1.jpg'},
+      {name:'MacBook Pro 16',tagline:'Ultimate power for creatives',price:2250000,image:'https://cdsassets.apple.com/live/7WUAS350/images/tech-specs/mbp16-2024.png'},
+      {name:'iMac 24',tagline:'Vibrant 4.5K Retina display',price:1500000,image:'https://www.istore.com.ng/cdn/shop/files/iMac_M4_Chip_2-port_24-in_Silver_PDP_Image_Position_4__WWEN_600x.jpg?v=1731084671'},
+      {name:'Mac mini M2',tagline:'Compact desktop with powerful chips',price:610000,image:'https://www.istore.com.ng/cdn/shop/products/Mac_mini_M2_Silver_PDP_Image_Position-1__WWEN_d57eb591-ba59-4760-817f-b0e5dfbcca9e_600x.png?v=1675255093'},
+    ];
+    function getCart(){ try { return JSON.parse(localStorage.getItem('adesewa_cart')||'[]'); } catch(e){ return []; }}
+    function saveCart(c){ localStorage.setItem('adesewa_cart', JSON.stringify(c)); }
+    function addToCart(name,price,image){ const cart=getCart(); const existing=cart.find(i=>i.name===name); if(existing){existing.qty=(existing.qty||1)+1;} else {cart.push({name,price,image,qty:1});} saveCart(cart); alert(name+' added to cart'); updateCartCount(); }
+    function updateCartCount(){ const cart=getCart(); const count=cart.reduce((s,i)=>s+(i.qty||1),0); const e=document.getElementById('cartCount'); if(e) e.textContent=count; }
+    function onShopNow(name,price,image){ addToCart(name,price,image); window.location.href='cart.html'; }
+    function renderProducts(){
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = macProducts.map(p => `
+        <div class='card'>
+          <img src='${p.image}' alt='${p.name}' onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'"/>
+          <div class='card-body'>
+            <h3>${p.name}</h3>
+            <p>${p.tagline || ''}</p>
+            <div class='price'>₦${p.price.toLocaleString()}</div>
+            <button class='btn-shop' onclick="onShopNow('${p.name.replace(/'/g,"\\'" )}', ${p.price}, '${p.image}')">Shop now</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderProducts();
+    updateCartCount();
+  </script>
+</body>
+</html>

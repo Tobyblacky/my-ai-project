@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Infinix - Adesewa Store</title>
+  <link rel='stylesheet' href='css/styles.css'>
+</head>
+<body>
+  <header>
+    <div class='header-inner'>
+      <a href='index.html' class='logo'>Adesewa Store</a>
+      <nav class='nav-menu'>
+        <a href='new-product-launch.html'>New Product Launch</a>
+        <a href='mac.html'>Mac</a>
+        <a href='iphone.html'>iPhone</a>
+        <a href='ipad.html'>iPad</a>
+        <a href='watch.html'>Watch</a>
+        <a href='airpods.html'>Airpods</a>
+        <a href='accessories.html'>Accessories</a>
+        <a href='services.html'>Services</a>
+        <a href='tecno.html'>Tecno</a>
+        <a href='infinix.html'>Infinix</a>
+        <a href='itel.html'>Itel</a>
+      </nav>
+      <div id="cartIcon"><a href="cart.html">🛒 <span id="cartCount">0</span></a></div>
+    </div>
+  </header>
+  <main style='padding:20px;max-width:1200px;margin:0 auto;'>
+    <h1>Infinix</h1>
+    <p>Browse Infinix products from Adesewa Store.</p>
+    <div id='productGrid' class='products'></div>
+    <a href='index.html' style='display:inline-block;margin-top:16px;padding:10px 16px;background:#007BFF;color:#fff;border-radius:8px;text-decoration:none;'>Back to shop</a>
+  </main>
+  <script>
+    const infinixProducts = [
+      {name:'Infinix Note 40',tagline:'Mid-range with excellent display.',price:420000,image:'https://tse1.mm.bing.net/th/id/OIP.wK8VpQ9e6c1lZXvJ7K0R7AAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Hot 40',tagline:'Budget powerhouse with long battery life.',price:250000,image:'https://tse2.mm.bing.net/th/id/OIP.mF5k-rMfXhN0q8K0Lnw5nQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Smart 8',tagline:'Affordable smartphone for daily use.',price:145000,image:'https://tse3.mm.bing.net/th/id/OIP.rM6X5dXK3YXhZ5K6Gv0qIAAAAA?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Zero 40',tagline:'Premium feature with competitive pricing.',price:680000,image:'https://tse4.mm.bing.net/th/id/OIP.Sw8nQ3fRq7nP8mL9H9wZMQHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Hot 40 Pro',tagline:'Upgraded performance and camera.',price:310000,image:'https://tse1.mm.bing.net/th/id/OIP.eR7Z6pN5eZ8rZ3I0rK5e4wHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Infinix Note 40 Pro',tagline:'Stylus-enabled productivity phone.',price:520000,image:'https://tse2.mm.bing.net/th/id/OIP.qH9k3Pw5pQ7rQ6K5tM8l8wHaHa?w=474&h=474&rs=1&pid=ImgDetMain&o=7&rm=3'}
+    ];
+
+    function getCart(){
+      try { return JSON.parse(localStorage.getItem('adesewa_cart') || '[]'); } catch(e){ return []; }
+    }
+    function saveCart(cart){
+      localStorage.setItem('adesewa_cart', JSON.stringify(cart));
+    }
+    function addToCart(name, price, image){
+      const cart = getCart();
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty = (existing.qty || 1) + 1;
+      } else {
+        cart.push({name, price, image, qty:1});
+      }
+      saveCart(cart);
+      alert(name + ' added to cart');
+    }
+    function onShopNow(name,price,image){ addToCart(name,price,image); window.location.href='cart.html'; }
+    function renderProducts(){
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = infinixProducts.map(p => `
+        <div class='card'>
+          <img src='${p.image}' alt='${p.name}' onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'"/>
+          <div class='card-body'>
+            <h3>${p.name}</h3>
+            <p>${p.tagline || ''}</p>
+            <div class='price'>₦${p.price.toLocaleString()}</div>
+            <button class='btn-shop' onclick="onShopNow('${p.name.replace("'","\'" )}', ${p.price}, '${p.image}')">Shop now</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderProducts();
+  </script>
+</body>
+</html>

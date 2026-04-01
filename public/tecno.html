@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Tecno - Adesewa Store</title>
+  <link rel='stylesheet' href='css/styles.css'>
+</head>
+<body>
+  <header>
+    <div class='header-inner'>
+      <a href='index.html' class='logo'>Adesewa Store</a>
+      <nav class='nav-menu'>
+        <a href='new-product-launch.html'>New Product Launch</a>
+        <a href='mac.html'>Mac</a>
+        <a href='iphone.html'>iPhone</a>
+        <a href='ipad.html'>iPad</a>
+        <a href='watch.html'>Watch</a>
+        <a href='airpods.html'>Airpods</a>
+        <a href='accessories.html'>Accessories</a>
+        <a href='services.html'>Services</a>
+        <a href='tecno.html'>Tecno</a>
+        <a href='infinix.html'>Infinix</a>
+        <a href='itel.html'>Itel</a>
+      </nav>
+      <div id="cartIcon"><a href="cart.html">🛒 <span id="cartCount">0</span></a></div>
+    </div>
+  </header>
+  <main style='padding:20px;max-width:1200px;margin:0 auto;'>
+    <h1>Tecno</h1>
+    <p>Browse Tecno products from Adesewa Store.</p>
+    <div id='productGrid' class='products'></div>
+    <a href='index.html' style='display:inline-block;margin-top:16px;padding:10px 16px;background:#007BFF;color:#fff;border-radius:8px;text-decoration:none;'>Back to shop</a>
+  </main>
+  <script>
+    const tecnoProducts = [
+      {name:'Tecno Camon 40',tagline:'Sharp camera series for creators.',price:315000,image:'https://fdn2.gsmarena.com/vv/pics/tecno/tecno-camon-40-4g-2.jpg'},
+      {name:'Tecno Camon 40 Pro',tagline:'Pro-grade video recording at great price.',price:409000,image:'https://fdn2.gsmarena.com/vv/pics/tecno/tecno-camon-40-pro-5g-2.jpg'},
+      {name:'Tecno Phantom V Flip 2',tagline:'Fashion-forward foldable experience.',price:1070000,image:'https://tse1.mm.bing.net/th/id/OIP.DvAGdFhS4sFmqWOC5il9wwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Phantom V Fold 2',tagline:'Large foldable screen with premium power.',price:1800000,image:'https://tse3.mm.bing.net/th/id/OIP.t0BDTOlf1JCjF_WfQUtdKwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Spark 40',tagline:'Budget performance with long battery.',price:197000,image:'https://tse1.mm.bing.net/th/id/OIP.DlJi3zzO8Le7D4fus-ArnAAAAA?w=441&h=441&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Spark 40 Pro',tagline:'Fast charging and crisp display.',price:261000,image:'https://tse3.mm.bing.net/th/id/OIP.TlgGEFa2RMNiE0ehmjyBIwHaHa?w=600&h=600&rs=1&pid=ImgDetMain&o=7&rm=3'},
+      {name:'Tecno Spark 40 Pro+',tagline:'Top-tier specs for gaming and multitasking.',price:285000,image:'https://tse3.mm.bing.net/th/id/OIP.RXAf6za-ignCjLjbQvFEswHaHQ?rs=1&pid=ImgDetMain&o=7&rm=3'}
+    ];
+
+    function getCart(){ try { return JSON.parse(localStorage.getItem('adesewa_cart') || '[]'); } catch(e){ return []; } }
+    function saveCart(cart){ localStorage.setItem('adesewa_cart', JSON.stringify(cart)); }
+    function addToCart(name, price, image){ const cart = getCart(); const existing = cart.find(item => item.name === name); if (existing) { existing.qty = (existing.qty || 1) + 1; } else { cart.push({name, price, image, qty:1}); } saveCart(cart); alert(name + ' added to cart'); updateCartCount(); }
+    function updateCartCount(){ const cart=getCart(); const count=cart.reduce((s,i)=>s+(i.qty||1),0); const e=document.getElementById('cartCount'); if(e) e.textContent=count; }
+    function onShopNow(name,price,image){ addToCart(name,price,image); window.location.href='cart.html'; }
+    function renderProducts(){
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = tecnoProducts.map(p => `
+        <div class='card'>
+          <img src='${p.image}' alt='${p.name}' onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'"/>
+          <div class='card-body'>
+            <h3>${p.name}</h3>
+            <p>${p.tagline || ''}</p>
+            <div class='price'>₦${p.price.toLocaleString()}</div>
+            <button class='btn-shop' onclick="onShopNow('${p.name.replace(/'/g,"\\'" )}', ${p.price}, '${p.image}')">Shop now</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderProducts();
+    updateCartCount();
+  </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Accessories - Adesewa Store</title>
+  <link rel='stylesheet' href='css/styles.css'>
+</head>
+<body>
+  <header>
+    <div class='header-inner'>
+      <a href='index.html' class='logo'>Adesewa Store</a>
+      <nav class='nav-menu'>
+        <a href='new-product-launch.html'>New Product Launch</a>
+        <a href='mac.html'>Mac</a>
+        <a href='iphone.html'>iPhone</a>
+        <a href='ipad.html'>iPad</a>
+        <a href='watch.html'>Watch</a>
+        <a href='airpods.html'>Airpods</a>
+        <a href='accessories.html'>Accessories</a>
+        <a href='services.html'>Services</a>
+        <a href='tecno.html'>Tecno</a>
+        <a href='infinix.html'>Infinix</a>
+        <a href='itel.html'>Itel</a>
+      </nav>
+    </div>
+  </header>
+  <main style='padding:20px;max-width:1200px;margin:0 auto;'>
+    <h1>Accessories</h1>
+    <p>Browse Accessories products from Adesewa Store.</p>
+    <div id='productGrid' class='products'></div>
+    <a href='index.html' style='display:inline-block;margin-top:16px;padding:10px 16px;background:#007BFF;color:#fff;border-radius:8px;text-decoration:none;'>Back to shop</a>
+  </main>
+  <script>
+    const accessoriesProducts=[
+      {name:'Leather Case',tagline:'Premium protection with soft lining.',price:42000,image:'https://www.apple.com/v/iphone/bk/images/compare/compare_icloud__fhp3mpmxp5sy_large_2x.jpg'},
+      {name:'MagSafe Charger',tagline:'Wireless fast charging for iPhone.',price:45000,image:'https://www.apple.com/v/iphone/bk/images/compare/compare_icloud__fhp3mpmxp5sy_large_2x.jpg'},
+      {name:'AirTag',tagline:'Keep track of what matters most.',price:55000,image:'https://www.apple.com/v/airtag/d/images/overview/hero/hero__es1z4jou5c6y_large_2x.jpg'},
+      {name:'Magic Keyboard',tagline:'Precise typing on iPad.',price:178000,image:'https://www.apple.com/v/ipad-pro/q/images/overview/keyboard/hero__b3fj3thyqp6a_large_2x.jpg'},
+      {name:'Apple Pencil',tagline:'Precision drawing and note taking.',price:93000,image:'https://www.apple.com/v/apple-pencil/f/images/overview/hero/apple_pencil_2__f8lgb5d5p2ua_large_2x.jpg'},
+      {name:'USB-C to Lightning',tagline:'Fast data sync and charging.',price:12000,image:'https://www.apple.com/v/iphone/bk/images/compare/compare_icloud__fhp3mpmxp5sy_large_2x.jpg'}
+    ];
+    function getCart(){ try { return JSON.parse(localStorage.getItem('adesewa_cart')||'[]'); } catch(e){ return []; }}
+    function saveCart(c){ localStorage.setItem('adesewa_cart', JSON.stringify(c)); }
+    function addToCart(name,price,image){ const cart=getCart(); const existing=cart.find(i=>i.name===name); if(existing){existing.qty=(existing.qty||1)+1;} else {cart.push({name,price,image,qty:1});} saveCart(cart); alert(name+' added to cart'); updateCartCount(); }
+    function updateCartCount(){ const cart=getCart(); const count=cart.reduce((s,i)=>s+(i.qty||1),0); const e=document.getElementById('cartCount'); if(e) e.textContent=count; }
+    function onShopNow(name,price,image){ addToCart(name,price,image); window.location.href='cart.html'; }
+
+        function renderProducts(){
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = accessoriesProducts.map(p => `
+        <div class='card'>
+          <img src='${p.image}' alt='${p.name}' onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'"/>
+          <div class='card-body'>
+            <h3>${p.name}</h3>
+            <p>${p.tagline || ''}</p>
+            <div class='price'>₦${p.price.toLocaleString()}</div>
+            <button class='btn-shop' onclick="onShopNow('${p.name.replace("'","\'" )}', ${p.price}, '${p.image}')">Shop now</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderProducts();
+    updateCartCount();
+  </script>
+</body>
+</html>
